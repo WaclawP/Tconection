@@ -3,7 +3,7 @@ import requests
 import time
 import base64
 import json
-st.secrets["db_username"]
+
 
 CLIENT_ID = st.secrets["CLIENT_ID"]
 CLIENT_SECRET = st.secrets["CLIENT_SECRET"]
