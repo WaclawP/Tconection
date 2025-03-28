@@ -3,7 +3,11 @@ import requests
 import time
 import base64
 import json
+st.secrets["db_username"]
 
+CLIENT_ID = st.secrets["CLIENT_ID"]
+CLIENT_SECRET = st.secrets["CLIENT_SECRET"]
+WEBHOOK_URL = st.secrets["WEBHOOK_URL"]
 
 if 'device_code' not in st.session_state:
     st.session_state['device_code'] = None
