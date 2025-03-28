@@ -67,7 +67,6 @@ if st.button("Authorize with Allegro") and st.session_state['device_code'] is No
         verification_uri_complete = data.get('verification_uri_complete')
         st.session_state['device_code'] = data.get('device_code')
         st.session_state['polling_interval'] = data.get('interval')
-        konto = st.text_input("wpisz nazwę konta")
         st.markdown(f"Proszę odwiedzić: {verification_uri_complete}  ") #kod: {user_code} mozna dodac ale czesto jest
         while st.session_state['access_token'] is None and st.session_state['device_code'] is not None:
             time.sleep(3)
