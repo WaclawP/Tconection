@@ -4,10 +4,6 @@ import time
 import base64
 import json
 
-# Konfiguracja aplikacji
-CLIENT_ID = "617b256bbd8c41a78cb5635762bca18b"
-CLIENT_SECRET = "sAgYRtmbQJyKeC1JrzP90ucIhwERS7RNX481oTl5p18vDtSOkReGJuyCb60V6KR3"
-WEBHOOK_URL = "https://makewarp.app.n8n.cloud/webhook-test/40626a4b-7074-4ef6-b641-fae4d7ee3e31"
 
 if 'device_code' not in st.session_state:
     st.session_state['device_code'] = None
