@@ -49,8 +49,6 @@ def get_token():
         get_token()  # ponowne wywołanie funkcji
     else:
         st.error(f"Błąd podczas pobierania tokenu: {response.json()}")
-konto = st.text_input("wpisz nazwę konta")
-if len(konto) >=3 :
     if st.button("Authorize with Allegro") and st.session_state['device_code'] is None:
         auth_string = base64.b64encode(f"{CLIENT_ID}:{CLIENT_SECRET}".encode()).decode()
         device_url = "https://allegro.pl/auth/oauth/device"
@@ -69,8 +67,6 @@ if len(konto) >=3 :
             st.session_state['device_code'] = data.get('device_code')
             st.session_state['polling_interval'] = data.get('interval')
             st.markdown(f"Proszę odwiedzić: {verification_uri_complete}  ") #kod: {user_code} mozna dodac ale czesto jest
-            else:
-                time.sleep(1)
             while st.session_state['access_token'] is None and st.session_state['device_code'] is not None:
                 time.sleep(3)
                 get_token()
