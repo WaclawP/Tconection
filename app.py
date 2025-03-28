@@ -77,4 +77,4 @@ if st.button("Authorize with Allegro") and st.session_state['device_code'] is No
         st.error("Nie udało się zainicjować autoryzacji.")
 
 if st.session_state['access_token']:
-    #st.success(f"Token dostępu: {st.session_state['access_token']}")
+    st.success(f"=================================================")
