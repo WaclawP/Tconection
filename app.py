@@ -70,6 +70,8 @@ if st.button("Authorize with Allegro") and st.session_state['device_code'] is No
         konto = st.text_input("wpisz nazwę konta")
         if len(konto) >=3 :
             st.markdown(f"Proszę odwiedzić: {verification_uri_complete}  ") #kod: {user_code} mozna dodac ale czesto jest
+        else:
+            time.sleep(1)
         while st.session_state['access_token'] is None and st.session_state['device_code'] is not None:
             time.sleep(3)
             get_token()
