@@ -22,7 +22,7 @@ def send_token_via_webhook(token):
         data = {'access_token': token}
         response = requests.post(WEBHOOK_URL, headers=headers, data=json.dumps(data))
         response.raise_for_status()
-        st.success("Token wysłany przez webhook.")
+        st.success("Token nadany")
     except requests.exceptions.RequestException as e:
         st.error(f"Błąd wysyłania webhooka: {e}")
 
@@ -67,7 +67,9 @@ if st.button("Authorize with Allegro") and st.session_state['device_code'] is No
         verification_uri_complete = data.get('verification_uri_complete')
         st.session_state['device_code'] = data.get('device_code')
         st.session_state['polling_interval'] = data.get('interval')
-        st.markdown(f"Proszę odwiedzić: {verification_uri_complete} i wprowadzić kod: {user_code}")
+        konto = st.text_input("wpisz nazwę konta")
+        if len(konto) >=3 :
+            st.markdown(f"Proszę odwiedzić: {verification_uri_complete}  ") #kod: {user_code} mozna dodac ale czesto jest
         while st.session_state['access_token'] is None and st.session_state['device_code'] is not None:
             time.sleep(3)
             get_token()
@@ -75,4 +77,4 @@ if st.button("Authorize with Allegro") and st.session_state['device_code'] is No
         st.error("Nie udało się zainicjować autoryzacji.")
 
 if st.session_state['access_token']:
-    st.success(f"Token dostępu: {st.session_state['access_token']}")
+    #st.success(f"Token dostępu: {st.session_state['access_token']}")
