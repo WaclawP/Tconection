@@ -62,18 +62,17 @@ st.markdown("""
 div.stButton > button {
     font-size: 20px;
     padding: 15px 30px;
-    background-color: #4CAF50;
+    background-color: #283ba6;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 div.stButton > button:hover {
-    background-color: #45a049;
+    background-color: #2834a6;
 }
 </style>""", unsafe_allow_html=True)
-
+st.header("Kliknij, aby rozpocząć autoryzację z Allegro")
 # Inicjalizacja procesu autoryzacji
 if st.button("Autoryzuj z Allegro") and not st.session_state['device_code']:
     auth_string = base64.b64encode(f"{CLIENT_ID}:{CLIENT_SECRET}".encode()).decode()
