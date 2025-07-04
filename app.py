@@ -72,39 +72,46 @@ div.stButton > button:hover {
     background-color: #2834a6;
 }
 </style>""", unsafe_allow_html=True)
+
 st.header("Kliknij, aby rozpocząć autoryzację z Allegro")
+
 # Inicjalizacja procesu autoryzacji
-if st.button("Autoryzuj z Allegro") and not st.session_state['device_code']:
-    auth_string = base64.b64encode(f"{CLIENT_ID}:{CLIENT_SECRET}".encode()).decode()
-    device_url = "https://allegro.pl/auth/oauth/device"
-    headers = {
-        "Authorization": f"Basic {auth_string}",
-        "Content-Type": "application/x-www-form-urlencoded"
-    }
-    data = {
-        "client_id": CLIENT_ID
-    }
-    device_response = requests.post(device_url, headers=headers, data=data)
+# Wyśrodkowany przycisk: Autoryzuj z Allegro
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    if st.button("Autoryzuj z Allegro") and not st.session_state['device_code']:
+        auth_string = base64.b64encode(f"{CLIENT_ID}:{CLIENT_SECRET}".encode()).decode()
+        device_url = "https://allegro.pl/auth/oauth/device"
+        headers = {
+            "Authorization": f"Basic {auth_string}",
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+        data = {
+            "client_id": CLIENT_ID
+        }
+        device_response = requests.post(device_url, headers=headers, data=data)
 
-    if device_response.status_code == 200:
-        response_data = device_response.json()
-        st.session_state['device_code'] = response_data.get('device_code')
-        st.session_state['polling_interval'] = response_data.get('interval')
+        if device_response.status_code == 200:
+            response_data = device_response.json()
+            st.session_state['device_code'] = response_data.get('device_code')
+            st.session_state['polling_interval'] = response_data.get('interval')
 
-        verification_uri_complete = response_data.get('verification_uri_complete')
-        user_code = response_data.get('user_code')
+            verification_uri_complete = response_data.get('verification_uri_complete')
+            user_code = response_data.get('user_code')
 
-        st.success("Rozpoczęto autoryzację.")
-        st.markdown(f"**1.** Przejdź do: [**{verification_uri_complete}**]({verification_uri_complete})")
-        st.markdown(f"**2.** Wprowadź kod autoryzacyjny: **`{user_code}`**")
-        st.info("Po autoryzacji wróć tutaj i kliknij 'Sprawdź status autoryzacji'.")
-    else:
-        st.error("Nie udało się zainicjować autoryzacji.")
+            st.success("Rozpoczęto autoryzację.")
+            st.markdown(f"**1.** Przejdź do: [**{verification_uri_complete}**]({verification_uri_complete})")
+            st.markdown(f"**2.** Wprowadź kod autoryzacyjny: **`{user_code}`**")
+            st.info("Po autoryzacji wróć tutaj i kliknij 'Sprawdź status autoryzacji'.")
+        else:
+            st.error("Nie udało się zainicjować autoryzacji.")
 
-# Przycisk do sprawdzenia statusu autoryzacji
+# Wyśrodkowany przycisk: Sprawdź status autoryzacji
 if st.session_state['device_code'] and not st.session_state['access_token']:
-    if st.button("Sprawdź status autoryzacji"):
-        get_token()
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("Sprawdź status autoryzacji"):
+            get_token()
 
 # Komunikat końcowy
 if st.session_state['access_token']:
